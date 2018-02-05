@@ -59,10 +59,6 @@ this.displayItems=function(container){
 function ShoppingItem(item,qt){
         this.item=item;
         this.qt=qt;
-    ShoppingItem.addToList = function(element,eqt){
-        var newItem= new ShoppingItem(element,eqt);
-        shoppingList.push(newItem);
-    }
 }
 //get the item information through its ID
 function getItemInfo(id){
@@ -82,7 +78,28 @@ function getItemInfo(id){
         }
     });
 }
-
+//remove element from list by index
+function supElement(i){
+    var element=shoppingList.splice(i,1);
+    //re adjusting the price after remove and re displaying the new list
+    totalshoppingcart-= (element[0].item.price)*element[0].qt;
+    displayList();
+}
+//display the shopping list in a table format
+function displayList(){
+     container.innerHTML="";  
+        var table=document.createElement('TABLE');
+        table.innerHTML="<tr><th>Edit</th><th>Product Name</th><th>Product Price</th><th>Qt</th><th>Product total price</th><th>Total Price</th></tr>";
+        var i=0;
+        shoppingList.forEach(function(element){
+        table.innerHTML+=`<tr><td><a href="#" onclick="supElement(${i});"><i class="fa fa-remove" aria-hidden="true"></i></a></t></td><td>${element.item.name}</td><td>${element.item.price} \$</td><td>${element.qt}</td><td>${element.qt*element.item.price} \$</td></tr>`; 
+            i++;
+        });
+        table.innerHTML+=`<tr><td></td><td></td><td></td><td></td><td>TAX</td><td>${(totalshoppingcart*0.1).toFixed(2)} \$</td></tr>`; 
+        table.innerHTML+=`<tr><td></td><td></td><td></td><td></td><td>${(totalshoppingcart*1.1).toFixed(2)} \$</td></tr>`; 
+        container.appendChild(table);
+        
+}
 
 
 
@@ -103,15 +120,7 @@ document.addEventListener("mouseover", function(element){
     });
         }
     else if (element.target.tagName=="A" && element.target.id=="Shope"){
-        container.innerHTML="";  
-        var table=document.createElement('TABLE');
-        table.innerHTML="<tr><th>Product Name</th><th>Product Price</th><th>Qt</th><th>Product total price</th><th>Total Price</th></tr>";
-        shoppingList.forEach(function(element){
-        table.innerHTML+=`<tr><td>${element.item.name}</td><td>${element.item.price} \$</td><td>${element.qt}</td><td>${element.qt*element.item.price} \$</td></tr>`;            
-        });
-        table.innerHTML+=`<tr><td></td><td></td><td></td><td>TAX</td><td>${(totalshoppingcart*0.1).toFixed(2)} \$</td></tr>`; 
-        table.innerHTML+=`<tr><td></td><td></td><td></td><td></td><td>${(totalshoppingcart*1.1).toFixed(2)} \$</td></tr>`; 
-        container.appendChild(table);
+       displayList();
         }
     
     }
