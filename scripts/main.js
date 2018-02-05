@@ -92,11 +92,11 @@ function displayList(){
         table.innerHTML="<tr><th>Edit</th><th>Product Name</th><th>Product Price</th><th>Qt</th><th>Product total price</th><th>Total Price</th></tr>";
         var i=0;
         shoppingList.forEach(function(element){
-        table.innerHTML+=`<tr><td><a href="#" onclick="supElement(${i});"><i class="fa fa-remove" aria-hidden="true"></i></a></t></td><td>${element.item.name}</td><td>${element.item.price} \$</td><td>${element.qt}</td><td>${element.qt*element.item.price} \$</td></tr>`; 
+        table.innerHTML+=`<tr><td><a href="#" onclick="supElement(${i});"><i class="fa fa-remove" aria-hidden="true"></i></a></t></td><td>${element.item.name}</td><td>${element.item.price} \$</td><td>${element.qt}</td><td>${(element.qt*element.item.price).toFixed(2)} \$</td></tr>`; 
             i++;
         });
         table.innerHTML+=`<tr><td></td><td></td><td></td><td></td><td>TAX</td><td>${(totalshoppingcart*0.1).toFixed(2)} \$</td></tr>`; 
-        table.innerHTML+=`<tr><td></td><td></td><td></td><td></td><td>${(totalshoppingcart*1.1).toFixed(2)} \$</td></tr>`; 
+        table.innerHTML+=`<tr><td></td><td></td><td></td><td></td><td>Total</td><td>${(totalshoppingcart*1.1).toFixed(2)} \$</td></tr>`; 
         container.appendChild(table);
         
 }
